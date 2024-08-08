@@ -1,25 +1,60 @@
 /* styles.css */
-#card-container {
+body {
+    font-family: Arial, sans-serif;
+}
+
+#cardContainer {
     position: relative;
     width: 100%;
     height: 80vh;
     border: 1px solid #ccc;
-    background-color: #f9f9f9;
+    overflow: auto;
 }
 
 .card {
     position: absolute;
-    border: 1px solid #ddd;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border: 1px solid #000;
+    background-color: #ffffff;
     padding: 10px;
-    box-sizing: border-box;
-    cursor: move;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
 }
 
-.card input[type="color"] {
+button {
+    margin-top: 10px;
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
     width: 100%;
-    border: none;
-    padding: 5px;
-    margin: 5px 0;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }
