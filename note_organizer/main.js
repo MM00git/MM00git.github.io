@@ -46,20 +46,21 @@ async function displayCards() {
   });
 }
 
-// Function to add a new card
 async function addCard() {
-  const newCard = {
-    title: 'New Card',
-    description: 'Description here',
-    color: '#f0f0f0',
-    x: 100,
-    y: 100,
-    width: 200,
-    height: 150
-  };
-  await addDoc(cardsCollection, newCard);
-  displayCards();
+  try {
+    const newCard = {
+      title: 'New Card',
+      description: 'Description here',
+      color: '#f0f0f0',
+      x: 100,
+      y: 100,
+      width: 200,
+      height: 150
+    };
+    await addDoc(cardsCollection, newCard);
+    displayCards(); // カードを再表示
+  } catch (error) {
+    console.error("Error adding document: ", error);
+  }
 }
 
-// Initial call to display cards
-displayCards();
