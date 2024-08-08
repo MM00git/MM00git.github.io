@@ -2,38 +2,22 @@
 <html>
 <head>
   <title>NoteOrganizer</title>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+  <meta charset="UTF-8">
+  <script type="module" src="main.js" defer></script>
+  <style>
+    .card {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      margin: 10px;
+      display: inline-block;
+      position: absolute;
+    }
+  </style>
 </head>
 <body>
   <h1>NoteOrganizer</h1>
-  <div id="content"></div>
-  <script>
-    // Firebaseの初期化
-    const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_PROJECT_ID.appspot.com",
-      messagingSenderId: "YOUR_SENDER_ID",
-      appId: "YOUR_APP_ID"
-    };
-    firebase.initializeApp(firebaseConfig);
-
-    // Firestoreのデータを取得して表示
-    const db = firebase.firestore();
-    db.collection('cards').get().then((querySnapshot) => {
-      const contentDiv = document.getElementById('content');
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        contentDiv.innerHTML += `<div style="background-color:${data.color}; width:${data.width}px; height:${data.height}px;">
-          <h2>${data.title}</h2>
-          <p>Position: (${data.x}, ${data.y})</p>
-        </div>`;
-      });
-    }).catch((error) => {
-      console.error("Error getting documents: ", error);
-    });
-  </script>
+  <div id="card-container"></div>
+  <button onclick="addCard()">Add Card</button>
 </body>
 </html>
