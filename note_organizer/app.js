@@ -82,57 +82,26 @@ async function displayCards() {
         cardElement.innerHTML = `
             <p>${data.description}</p>
             <button onclick="deleteCard('${data.id}')">Delete</button>
-            <input type="color" value="${data.color}" onchange="updateColor('${data.id}', this.value)">
+            <input type="color" value="${data.color}" onchange="changeColor(event, '${data.id}')">
         `;
         cardContainer.appendChild(cardElement);
-        
-        // Add drag-and-drop functionality
-        addDragAndDrop(cardElement);
     });
 }
 
-// Update card color
-async function updateColor(id, color) {
-    const cardRef = doc(db, "cards", id);
-    await updateDoc(cardRef, { color });
-}
-
 // Delete a card
-async function deleteCard(id) {
-    const cardRef = doc(db, "cards", id);
-    await deleteDoc(cardRef);
-    displayCards(); // Refresh the card display
-}
+window.deleteCard = async function(id) {
+    const cardDoc = doc(db, "cards", id);
+    await deleteDoc(cardDoc);
+    displayCards();
+};
 
-// Add drag-and-drop functionality to a card element
-function addDragAndDrop(element) {
-    let offsetX, offsetY, isDragging = false;
+// Change card color
+window.changeColor = async function(event, id) {
+    const color = event.target.value;
+    const cardDoc = doc(db, "cards", id);
+    await updateDoc(cardDoc, { color });
+    displayCards();
+};
 
-    element.onmousedown = (e) => {
-        isDragging = true;
-        offsetX = e.clientX - element.getBoundingClientRect().left;
-        offsetY = e.clientY - element.getBoundingClientRect().top;
-        
-        document.onmousemove = (e) => {
-            if (isDragging) {
-                element.style.left = `${e.clientX - offsetX}px`;
-                element.style.top = `${e.clientY - offsetY}px`;
-                updatePosition(element.dataset.id, e.clientX - offsetX, e.clientY - offsetY);
-            }
-        };
-
-        document.onmouseup = () => {
-            isDragging = false;
-            document.onmousemove = document.onmouseup = null;
-        };
-    };
-}
-
-// Update card position
-async function updatePosition(id, x, y) {
-    const cardRef = doc(db, "cards", id);
-    await updateDoc(cardRef, { x, y });
-}
-
-// Initialize the display of cards
+// Initialize card display
 displayCards();
