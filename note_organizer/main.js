@@ -27,23 +27,27 @@ const cardsCollection = collection(db, "cards");
 // Function to display cards
 async function displayCards() {
   const cardContainer = document.getElementById('card-container');
-  cardContainer.innerHTML = '';
-  const querySnapshot = await getDocs(cardsCollection);
-  querySnapshot.forEach((doc) => {
-    const data = doc.data();
-    const cardElement = document.createElement('div');
-    cardElement.className = 'card';
-    cardElement.style.backgroundColor = data.color;
-    cardElement.style.left = `${data.x}px`;
-    cardElement.style.top = `${data.y}px`;
-    cardElement.style.width = `${data.width}px`;
-    cardElement.style.height = `${data.height}px`;
-    cardElement.innerHTML = `
-      <h3>${data.title}</h3>
-      <p>${data.description}</p>
-    `;
-    cardContainer.appendChild(cardElement);
-  });
+  cardContainer.innerHTML = ''; // 既存のカードをクリア
+  try {
+    const querySnapshot = await getDocs(cardsCollection);
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      const cardElement = document.createElement('div');
+      cardElement.className = 'card';
+      cardElement.style.backgroundColor = data.color;
+      cardElement.style.left = `${data.x}px`;
+      cardElement.style.top = `${data.y}px`;
+      cardElement.style.width = `${data.width}px`;
+      cardElement.style.height = `${data.height}px`;
+      cardElement.innerHTML = `
+        <h3>${data.title}</h3>
+        <p>${data.description}</p>
+      `;
+      cardContainer.appendChild(cardElement);
+    });
+  } catch (error) {
+    console.error("Error getting documents: ", error);
+  }
 }
 
 async function addCard() {
