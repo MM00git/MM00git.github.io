@@ -4,35 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Note Organizer</title>
-    <style>
-        #card-container {
-            position: relative;
-            width: 100%;
-            height: 80vh;
-            border: 1px solid #ccc;
-            background-color: #f9f9f9;
-        }
-        .card {
-            position: absolute;
-            border: 1px solid #ddd;
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            padding: 10px;
-            box-sizing: border-box;
-            cursor: move;
-        }
-        .card input[type="color"] {
-            width: 100%;
-            border: none;
-            padding: 5px;
-            margin: 5px 0;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <button onclick="addCard()">Add Card</button>
     <div id="card-container"></div>
-    
+
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-analytics.js"></script>
