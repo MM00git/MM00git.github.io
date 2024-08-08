@@ -1,0 +1,36 @@
+#cardContainer {
+    position: relative;
+}
+
+.card {
+    position: absolute;
+    width: 200px;
+    height: 150px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: move;
+    overflow: hidden;
+}
+
+.card .card-header {
+    background-color: #f8f9fa;
+    padding: 10px;
+    font-size: 1.25rem;
+    text-align: center;
+}
+
+.card .card-body {
+    padding: 10px;
+    background-color: #fff;
+}
+
+.card.dragging {
+    opacity: 0.5;
+}
+
+.relationship-line {
+    stroke: black;
+    stroke-width: 2;
+    fill: none;
+}
