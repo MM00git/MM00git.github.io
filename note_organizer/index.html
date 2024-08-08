@@ -3,7 +3,6 @@
 <head>
   <title>NoteOrganizer</title>
   <meta charset="UTF-8">
-  <script type="module" src="main.js" defer></script>
   <style>
     .card {
       border: 1px solid #ccc;
@@ -19,5 +18,82 @@
   <h1>NoteOrganizer</h1>
   <div id="card-container"></div>
   <button onclick="addCard()">Add Card</button>
+
+  <!-- Firebase SDK CDN -->
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-analytics.js";
+    import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+    
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyB0uhV83S2vm-GlDIfIOU-G3nwX7xsDiP0",
+      authDomain: "noteorganizer-90c0e.firebaseapp.com",
+      projectId: "noteorganizer-90c0e",
+      storageBucket: "noteorganizer-90c0e.appspot.com",
+      messagingSenderId: "333630837587",
+      appId: "1:333630837587:web:0373fdccd41dff63a807a6",
+      measurementId: "G-8R14FX42ZF"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+
+    // Initialize Firestore
+    const db = getFirestore(app);
+    const cardsCollection = collection(db, "cards");
+
+    // Function to display cards
+    async function displayCards() {
+      const cardContainer = document.getElementById('card-container');
+      cardContainer.innerHTML = '';
+      try {
+        const querySnapshot = await getDocs(cardsCollection);
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          const cardElement = document.createElement('div');
+          cardElement.className = 'card';
+          cardElement.style.backgroundColor = data.color;
+          cardElement.style.left = `${data.x}px`;
+          cardElement.style.top = `${data.y}px`;
+          cardElement.style.width = `${data.width}px`;
+          cardElement.style.height = `${data.height}px`;
+          cardElement.innerHTML = `
+            <h3>${data.title}</h3>
+            <p>${data.description}</p>
+          `;
+          cardContainer.appendChild(cardElement);
+        });
+      } catch (error) {
+        console.error("Error getting documents: ", error);
+      }
+    }
+
+    // Function to add a new card
+    async function addCard() {
+      try {
+        console.log('Adding new card...');
+        const newCard = {
+          title: 'New Card',
+          description: 'Description here',
+          color: '#f0f0f0',
+          x: 100,
+          y: 100,
+          width: 200,
+          height: 150
+        };
+        await addDoc(cardsCollection, newCard);
+        console.log('Card added successfully!');
+        displayCards(); // カードを再表示
+      } catch (error) {
+        console.error("Error adding document: ", error);
+      }
+    }
+
+    // Initial call to display cards
+    displayCards();
+  </script>
 </body>
 </html>
